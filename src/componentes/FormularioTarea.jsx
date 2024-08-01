@@ -2,67 +2,74 @@ import { useState, useEffect } from "react";
 
 export default function FormularioTarea() {
   const [tarea, setTarea] = useState({title: "", description: "", project: 2});
-  const [proyectos, setProyectos] = useState(null);
-  
-  function handLeInputChange(event) {
-    setTarea(
-        {
-            ...tarea,
-            [event.target.name]: event.target.value
-        }
-    );
+  const [proyectos, setProyectos] = useState([]);
+
+  useEffect(() => {
+    console.log("useEffect ejecutado");
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
+      },
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("No se pudieron cargar los proyectos");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Extraer la lista de proyectos del campo `results`
+      const proyectos = data.results;
+      console.log("Proyectos recibidos:", proyectos);
+      setProyectos(proyectos);
+    })
+    .catch((error) => {
+      console.error("Error de red:", error);
+    });
+  }, []);
+
+  function handleInputChange(event) {
+    setTarea({
+      ...tarea,
+      [event.target.name]: event.target.value
+    });
   }
 
   function handleProyectoChange(event) {
-    const selectedOptions = Array.from(
-        event.target.selectedOptions,
-        // Referenciamos el id del proyecto que resolvió la petición a la API
-        (option) => option.value
-    );
+    setTarea({
+      ...tarea,
+      project: event.target.value,
+    });
   }
 
-  function handLeSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`,{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
-        },
-        body: JSON.stringify(tarea)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
+      },
+      body: JSON.stringify(tarea)
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("No se pudo crear la tarea");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            selectedCategories.forEach((project) => {
-                fetch(
-                    `${
-                        import.meta.env.VITE_API_BASE_URL
-                    }/taskmanager/projects/`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Token ${token}`,
-                        },
-                        body: JSON.stringify({
-                            article: data.id,
-                            category: category.id,
-                        }),
-                    }
-                );
-            });
-        })
-        .catch((error) => {
-            console.error("Error de red:", error);
-        });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("No se pudo crear la tarea");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Tarea creada:", data);
+    })
+    .catch((error) => {
+      console.error("Error de red:", error);
+    });
   }
+
   return (
-    <form onSubmit={handLeSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="field">
         <label className="label has-text-left">Ingrese Nombre la tarea</label>
         <div className="control">
@@ -71,22 +78,28 @@ export default function FormularioTarea() {
             name="title"
             type="text"
             value={tarea.title}
-            onChange={handLeInputChange}
+            onChange={handleInputChange}
             placeholder="Nombre tarea"
           />
         </div>
       </div>
 
-      <div className="control">
-        
-        <div className="select">
-          <select
-          onChange={handleProyectoChange}
-          >
-            {proyectos.map((proyecto) =>(
-                <option key={proyecto.id} value={proyecto.id}>{proyecto.name}</option>
-            ))}
-          </select>
+      <div className="field">
+        <label className="label has-text-left">Seleccione un Proyecto</label>
+        <div className="control">
+          <div className="select">
+            <select
+              name="project"
+              value={tarea.project}
+              onChange={handleProyectoChange}
+            >
+              {proyectos.map((proyecto) => (
+                <option key={proyecto.id} value={proyecto.id}>
+                  {proyecto.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -97,7 +110,7 @@ export default function FormularioTarea() {
             className="textarea"
             name="description"
             value={tarea.description}
-            onChange={handLeInputChange}
+            onChange={handleInputChange}
             placeholder="Escribe tu mensaje"
           ></textarea>
         </div>

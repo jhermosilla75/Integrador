@@ -1,95 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function FormularioTarea() {
-  const [tarea, setTarea] = useState({ title: "", description: "", project: 0 });
-  const [proyectos, setProyectos] = useState([]);
+export default function FormularioProyecto() {
+  const [proyecto, setProyecto] = useState({ name: "", description: "", members: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
-  
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("No se pudieron cargar los proyectos");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const proyectos = data.results.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        setProyectos(proyectos);
-        // Seleccionar el primer proyecto por defecto
-        if (proyectos.length > 0) {
-          setTarea((prevTarea) => ({
-            ...prevTarea,
-            project: proyectos[0].id,
-          }));
-        }
-      })
-      .catch((error) => {
-        console.error("Error al cargar los proyectos", error);
-      })
-      .finally(() => {
-        setCargandoProyectos(false);
-      });
-  }, []);
 
   function handleInputChange(event) {
-    setTarea({
-      ...tarea,
+    setProyecto({
+      ...proyecto,
       [event.target.name]: event.target.value,
-    });
-  }
-
-  function handleProyectoChange(event) {
-    setTarea({
-      ...tarea,
-      project: event.target.value,
     });
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!tarea.title || tarea.project === 0) {
-      setModal({
-        isVisible: true,
-        content: "El nombre de la tarea y la selección de un proyecto son obligatorios.",
-      });
-      return;
-    }
+    if (!proyecto.name) {
+        setModal({
+          isVisible: true,
+          content: "El nombre del proyecto es obligatorio.",
+        });
+        return;
+      }
     setSubmitting(true);
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
       },
-      body: JSON.stringify(tarea),
+      body: JSON.stringify(proyecto),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("No se pudo crear la tarea");
+          throw new Error("No se pudo crear el Proyecto");
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Tarea creada:", data);
+        console.log("Proyecto creado:", data);
         setModal({
           isVisible: true,
-          content: "Tarea creada con éxito",
+          content: "Proyecto creado con éxito",
         });
-        // Limpiar el formulario
-        setTarea({ title: "", description: "", project: proyectos[0].id });
+        setProyecto({ name: "", description: "", members: 0 });
       })
       .catch((error) => {
-        console.error("Error al crear la tarea", error);
+        console.error("Error al crear el proyecto", error);
       })
       .finally(() => {
         setSubmitting(false);
@@ -105,7 +61,7 @@ export default function FormularioTarea() {
 
   function handleModalClose(confirm) {
     if (confirm && modal.content === "¿Estás seguro de que deseas cancelar?") {
-      setTarea({ title: "", description: "", project: proyectos[0]?.id || 0 });
+      setProyecto({ name: "", description: "", members: 0 });
     }
     setModal({ isVisible: false, content: "" });
   }
@@ -114,45 +70,26 @@ export default function FormularioTarea() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="field">
-          <label className="label has-text-left">Ingrese Nombre la tarea</label>
+          <label className="label has-text-left">Ingrese Nombre del Proyecto</label>
           <div className="control">
             <input
               className="input"
-              name="title"
+              name="name"
               type="text"
-              value={tarea.title}
+              value={proyecto.name}
               onChange={handleInputChange}
-              placeholder="Nombre tarea"
+              placeholder="Nombre del proyecto"
             />
           </div>
         </div>
 
         <div className="field">
-          <label className="label has-text-left">Seleccione un Proyecto</label>
-          <div className="control">
-            <div className="select">
-              <select
-                name="project"
-                value={tarea.project}
-                onChange={handleProyectoChange}
-              >
-                {proyectos.map((proyecto) => (
-                  <option key={proyecto.id} value={proyecto.id}>
-                    {proyecto.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label has-text-left">Descripción de la tarea</label>
+          <label className="label has-text-left">Descripción del proyecto</label>
           <div className="control">
             <textarea
               className="textarea"
               name="description"
-              value={tarea.description}
+              value={proyecto.description}
               onChange={handleInputChange}
               placeholder="Escribe tu mensaje"
             ></textarea>
@@ -168,12 +105,12 @@ export default function FormularioTarea() {
               name="enviarBtn"
               id="enviarBtn"
             >
-              Crear Tarea
+              Enviar
             </button>
           </div>
           <div className="control">
             <button
-              className="button is-primary"
+              className="button is-link"
               type="button"
               onClick={handleCancel}
               name="cancelarBtn"
@@ -191,7 +128,7 @@ export default function FormularioTarea() {
           <div className="modal-content">
             <div className="box">
               <p>{modal.content}</p>
-              {modal.content === "¿Estás seguro de que deseas cancelar?" && (
+              {modal.content === "¿Estás seguro de que deseas cancelar?" ? (
                 <div className="buttons">
                   <button
                     className="button is-danger"
@@ -206,8 +143,7 @@ export default function FormularioTarea() {
                     No
                   </button>
                 </div>
-              )}
-              {modal.content !== "¿Estás seguro de que deseas cancelar?" && (
+              ) : (
                 <button
                   className="button is-primary"
                   onClick={() => handleModalClose(false)}

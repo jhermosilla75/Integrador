@@ -36,9 +36,9 @@ export default function FormularioTarea() {
       .catch((error) => {
         console.error("Error al cargar los proyectos", error);
       })
-      .finally(() => {
+      /* .finally(() => {
         setCargandoProyectos(false);
-      });
+      }); */
   }, []);
 
   function handleInputChange(event) {

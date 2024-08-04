@@ -56,7 +56,7 @@ function AuthProvider({ children }) {
 function useAuth(type) {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
+        throw new Error("useAuth debe ser usado con AuthProvider");
     }
     return context[type];
 }

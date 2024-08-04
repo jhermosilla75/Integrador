@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function FormularioTarea() {
   const [tarea, setTarea] = useState({ title: "", description: "", project: 0 });
   const [proyectos, setProyectos] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
+
+  const { token } = useAuth("state");
   
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
@@ -69,7 +72,7 @@ export default function FormularioTarea() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify(tarea),
     })

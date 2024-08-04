@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function FormularioProyecto() {
-  const [proyecto, setProyecto] = useState({ name: "", description: "", members: 0 });
+  const [proyecto, setProyecto] = useState({ name: "", description: ""});
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
+
+  const  state = useAuth("state")
+  //console.log("Token", state)
 
   function handleInputChange(event) {
     setProyecto({
@@ -14,7 +18,7 @@ export default function FormularioProyecto() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!proyecto.name) {
+    if (!proyecto.proyecto) {
         setModal({
           isVisible: true,
           content: "El nombre del proyecto es obligatorio.",
@@ -26,7 +30,7 @@ export default function FormularioProyecto() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
+        Authorization: `Token ${ token }`,
       },
       body: JSON.stringify(proyecto),
     })
@@ -42,7 +46,7 @@ export default function FormularioProyecto() {
           isVisible: true,
           content: "Proyecto creado con éxito",
         });
-        setProyecto({ name: "", description: "", members: 0 });
+        setProyecto({ name: "", description: "" });
       })
       .catch((error) => {
         console.error("Error al crear el proyecto", error);
@@ -70,13 +74,14 @@ export default function FormularioProyecto() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="field">
-          <label className="label has-text-left">Ingrese Nombre del Proyecto</label>
+          <label className="label has-text-left" htmlFor="proyecto">Ingrese Nombre del Proyecto </label>
           <div className="control">
             <input
               className="input"
-              name="name"
+              id="proyecto"
+              name="proyecto"
               type="text"
-              value={proyecto.name}
+              value={proyecto.proyecto}
               onChange={handleInputChange}
               placeholder="Nombre del proyecto"
             />
@@ -84,11 +89,13 @@ export default function FormularioProyecto() {
         </div>
 
         <div className="field">
-          <label className="label has-text-left">Descripción del proyecto</label>
+          <label className="label has-text-left" htmlFor="description">Descripción del proyecto</label>
           <div className="control">
             <textarea
               className="textarea"
+              id="description"
               name="description"
+              type="text"
               value={proyecto.description}
               onChange={handleInputChange}
               placeholder="Escribe tu mensaje"

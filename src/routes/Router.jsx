@@ -3,7 +3,9 @@ import Login from "../components/Auth/Login";
 import FormularioTarea from "../components/FormularioTarea";
 import FormularioProyecto from "../components/FormularioProyecto";
 import Home from "../components/Home";
+import Profile from "../components/Profile";
 import Layout from "./Layout";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 
@@ -13,7 +15,7 @@ const Router = createBrowserRouter(
             element: <Layout/>,
             children: [
                 {
-                    path: "/",
+                    index: true,
                     element: <Home/>
                 },
                 {
@@ -21,13 +23,30 @@ const Router = createBrowserRouter(
                     element: <Login/>
                 },
                 {
+                    path: "/profile",
+                    element: (
+                        <ProtectedRoute>
+                            <Profile/>
+                        </ProtectedRoute>
+                    )
+                },
+                {
                     path: "tarea",
-                    element: <FormularioTarea/>
+                    element:(
+                        <ProtectedRoute>
+                            <FormularioTarea/>
+                        </ProtectedRoute>
+                    ),
                 },
                 {
                     path: "proyecto",
-                    element: <FormularioProyecto/>
+                    element:(
+                        <ProtectedRoute>
+                            <FormularioProyecto/>
+                        </ProtectedRoute>
+                    ),
                 },
+               
         ],
     },
 ],

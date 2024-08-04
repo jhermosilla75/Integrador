@@ -1,6 +1,6 @@
 
-import FormularioTarea from "./componentes/FormularioTarea";
-import FormularioProyecto from "./componentes/FormularioProyecto";
+import FormularioTarea from "./components/FormularioTarea";
+import FormularioProyecto from "./components/FormularioProyecto";
 
 function App() {
   

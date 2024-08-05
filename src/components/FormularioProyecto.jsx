@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState  } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function FormularioProyecto() {
@@ -7,7 +7,7 @@ export default function FormularioProyecto() {
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
   const  { token } = useAuth("state")
-  console.log("Token", token)
+  
 
   function handleInputChange(event) {
     setProyecto({
@@ -65,7 +65,7 @@ export default function FormularioProyecto() {
 
   function handleModalClose(confirm) {
     if (confirm && modal.content === "¿Estás seguro de que deseas cancelar?") {
-      setProyecto({ name: "", description: "", members: 0 });
+      setProyecto({ name: "", description: ""});
     }
     setModal({ isVisible: false, content: "" });
   }
@@ -79,9 +79,9 @@ export default function FormularioProyecto() {
             <input
               className="input"
               id="proyecto"
-              name="proyecto"
+              name="name"
               type="text"
-              value={proyecto.proyecto}
+              value={proyecto.name}
               onChange={handleInputChange}
               placeholder="Nombre del proyecto"
             />

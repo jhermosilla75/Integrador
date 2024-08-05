@@ -1,0 +1,9 @@
+.tareas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espacio entre las tarjetas */
+}
+
+.tarea-item {
+    width: 100%; /* Para que la tarjeta ocupe todo el ancho disponible */
+}

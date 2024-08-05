@@ -41,7 +41,12 @@ const Router = createBrowserRouter(
                 },
                 {
                     path: "tareas",
-                    element: <ListaTareas />
+                    element: (
+                        <ProtectedRoute>
+                            <ListaTareas/>
+                        </ProtectedRoute>
+                    )
+                     
                     
                 },
                 
@@ -53,6 +58,12 @@ const Router = createBrowserRouter(
                         </ProtectedRoute>
                     ),
                 },
+                {
+                    path: "*",
+                    element: <h1>Not Found</h1>
+                },
+
+                
                
         ],
     },

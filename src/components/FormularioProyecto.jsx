@@ -6,8 +6,8 @@ export default function FormularioProyecto() {
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
-  const  state = useAuth("state")
-  //console.log("Token", state)
+  const  { token } = useAuth("state")
+  console.log("Token", token)
 
   function handleInputChange(event) {
     setProyecto({

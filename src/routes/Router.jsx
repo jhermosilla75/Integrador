@@ -5,6 +5,7 @@ import FormularioProyecto from "../components/FormularioProyecto";
 import Home from "../components/Home";
 import Profile from "../components/Profile";
 import Layout from "./Layout";
+import ListaTareas from "../components/ListaTareas";
 import ProtectedRoute from "./ProtectedRoute";
 
 
@@ -36,8 +37,14 @@ const Router = createBrowserRouter(
                         <ProtectedRoute>
                             <FormularioTarea/>
                         </ProtectedRoute>
-                    ),
+                    )
                 },
+                {
+                    path: "tareas",
+                    element: <ListaTareas />
+                    
+                },
+                
                 {
                     path: "proyecto",
                     element:(

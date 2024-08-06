@@ -1,26 +1,129 @@
-
 import { useState, useEffect } from "react";
+import TarjetasTareas from "./TarjetasTareas";
+
+export default function ListaTareas() {
+    const [tareas, setTareas] = useState([]);
+    const [proyectos, setProyectos] = useState({});
+    const [isError, setIsError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchProyectos = async () => {
+        try {
+            const response = await 
+            //fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`);
+            
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${ import.meta.env.VITE_API_TOKEN}`,
+            },
+        })
+
+            if (!response.ok) {
+                throw new Error("No se pudieron cargar los proyectos");
+            }
+            const data = await response.json();
+            const proyectosMap = data.results.reduce((acc, proyecto) => {
+                acc[proyecto.id] = proyecto.name;
+                return acc;
+            }, {});
+            setProyectos(proyectosMap);
+        } catch (error) {
+            setIsError(true);
+        }
+    };
+
+    const fetchTareas = async () => {
+        setIsLoading(true);
+        try {
+            const response = await 
+            
+            
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${ import.meta.env.VITE_API_TOKEN}`,
+            },
+        })
+            
+            if (!response.ok) {
+                throw new Error("No se puedieron cargar las tareas");
+            }
+            const data = await response.json();
+            setTareas(data.results);
+        } catch (error) {
+            setIsError(true);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchProyectos();
+        fetchTareas();
+    }, []);
+
+    return (
+        <div>
+            <div className="my-5">
+                <h2 className="title">Lista de tareas</h2>
+                <div className="tareas-lista">
+                    {tareas.map((tarea) => (
+                        <div key={tarea.id} className="tarea-item">
+                            <TarjetasTareas tarea={tarea} proyectoNombre={proyectos[tarea.project]} />
+                        </div>
+                    ))}
+                </div>
+                {isError && <p>Error al cargar las tareas o proyectos.</p>}
+                {isLoading && <p>Cargando...</p>}
+            </div>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* import { useState, useEffect } from "react";
 import TarjetasTareas from "./TarjetasTareas";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function ListaTareas() {
     const [tareas, setTareas] = useState([]);
+    const [proyectos, setProyectos] = useState({});
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Asegúrate de que `useAuth` devuelva un token válido
-    const { token } = useAuth(); // Ajusta esto según lo que devuelva `useAuth`
-
+    const { token } = useAuth("state");
     const doFetch = async () => {
         setIsLoading(true);
 
-        console.log("Token:", token); // Verifica que el token no sea undefined
-
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
+       fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Token ${token}`,
+                Authorization: `Token ${ import.meta.env.VITE_API_TOKEN}`,
             },
         })
         .then((response) => {
@@ -30,8 +133,7 @@ export default function ListaTareas() {
             return response.json();
         })
         .then((data) => {
-            console.log("Datos recibidos:", data); // Verificar la respuesta de la API
-            setTareas(data.results); // Guardar las tareas en el estado
+            setTareas(data.results); 
         })
         .catch((error) => {
             console.error("Error al cargar las tareas:", error);
@@ -43,10 +145,10 @@ export default function ListaTareas() {
     };
 
     useEffect(() => {
-        if (token) {
+        
             doFetch();
-        }
-    }, [token]); // Asegúrate de que `doFetch` se llame solo si `token` está disponible
+        
+    }, []); // Asegúrate de que `doFetch` se llame solo si `token` está disponible
 
     if (isLoading) return <p>Cargando...</p>;
     if (isError) return <p>Error al cargar las tareas.</p>;
@@ -68,3 +170,4 @@ export default function ListaTareas() {
         </div>
     );
 }
+ */

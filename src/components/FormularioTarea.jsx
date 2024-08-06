@@ -14,7 +14,7 @@ export default function FormularioTarea() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${import.meta.env.VITE_API_TOKEN}`,
+        Authorization: `Token ${ token }`,
       },
     })
       .then((response) => {
@@ -72,7 +72,7 @@ export default function FormularioTarea() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
+        Authorization: `Token ${ token }`,
       },
       body: JSON.stringify(tarea),
     })

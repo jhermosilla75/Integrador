@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "./FooterBar";
 import Nav from "./Nav";
 
 export default function Home() {
     return (
         <div>
-            <Nav />
-            <Footer />
+            <h1>Pagina de inicio</h1>
             
             
         </div>

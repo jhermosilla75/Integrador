@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const usernameRef  = useRef("");
+    const passwordRef = useRef("");
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+   
     const { login } = useAuth("actions");
+    const { isAuthenticated } = useAuth("state");
+    if (isAuthenticated) window.location.href = "/";
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -18,7 +21,9 @@ function Login() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ 
+                    username: usernameRef.current.value , 
+                    password: passwordRef.current.value }),
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -39,11 +44,7 @@ function Login() {
         }
     }
 
-    function handleChange(event) {
-        const { name, value } = event.target;
-        if (name === "username") setUsername(value);
-        if (name === "password") setPassword(value);
-    }
+    
 
     return (
         <section className="section">
@@ -58,8 +59,7 @@ function Login() {
                                     type="text"
                                     id="username"
                                     name="username"
-                                    value={username}
-                                    onChange={handleChange}
+                                    ref={usernameRef}
                                 />
                                 <span className="icon is-small is-left">
                                     <i className="fas fa-user"></i>
@@ -74,8 +74,7 @@ function Login() {
                                     type="password"
                                     id="password"
                                     name="password"
-                                    value={password}
-                                    onChange={handleChange}
+                                    ref={passwordRef}
                                 />
                                 <span className="icon is-small is-left">
                                     <i className="fas fa-lock"></i>

@@ -7,7 +7,6 @@ function Login() {
     const passwordRef = useRef("");
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
    
     const { login } = useAuth("actions");
     const { isAuthenticated } = useAuth("state");
@@ -18,8 +17,7 @@ function Login() {
             navigate("/");
         }
     }, [isAuthenticated, navigate]);
-    //if (isAuthenticated) window.location.href = "/";
-
+    
     function handleSubmit(event) {
         event.preventDefault();
         if (!isLoading) {
@@ -41,6 +39,29 @@ function Login() {
                 })
                 .then((responseData) => {
                     login(responseData.token);
+                    if (responseData.token){
+                        fetch(`${import.meta.env.VITE_API_BASE_URL}/users/profiles/profile_data/`, {
+                            method: "GET",
+                            headers: {
+                                Authorization: `Token ${ responseData.token }`,
+                            },
+                        })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("No se pudo obtener ID de usuario");
+                            }
+                            return response.json();
+                        })
+                        .then((response) =>{ 
+                            login(responseData.token, response.user__id)
+                        })
+                        .catch((error) => {
+                            console.error("Error al obtener ID de usuario", error);
+                            setIsError(true);
+                        })  
+                    }
+
+                    
                 })
                 .catch((error) => {
                     console.error("Error error al iniciar sesión", error);

@@ -40,7 +40,7 @@ export default function ListaTareas() {
             const response = await 
             
             
-            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/?limit=100`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -1,5 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
     return (
@@ -46,6 +45,8 @@ export default function Navbar() {
                     >
                         Crea Tarea
                     </NavLink>
+                </div>
+                <div className="navbar-end">
                     <NavLink
                         to="/login"
                         className={({ isActive, isPending, isTransitioning }) =>
@@ -56,7 +57,7 @@ export default function Navbar() {
                             ].join(" navbar-item")
                         }
                     >
-                        Iniciar sesion
+                        Iniciar sesión
                     </NavLink>
                 </div>
             </nav>

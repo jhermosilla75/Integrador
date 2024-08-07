@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const usernameRef  = useRef("");
@@ -10,7 +11,14 @@ function Login() {
    
     const { login } = useAuth("actions");
     const { isAuthenticated } = useAuth("state");
-    if (isAuthenticated) window.location.href = "/";
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
+    }, [isAuthenticated, navigate]);
+    //if (isAuthenticated) window.location.href = "/";
 
     function handleSubmit(event) {
         event.preventDefault();

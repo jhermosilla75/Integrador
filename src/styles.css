@@ -1,0 +1,24 @@
+.tareas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espacio entre las tarjetas */
+}
+
+.tarea-item {
+    width: 50%; /* Para que la tarjeta ocupe todo el ancho disponible */
+    
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Esto alinea los elementos de manera que uno quede a la izquierda y otro a la derecha */
+    align-items: center;
+}
+
+.navbar-start {
+    display: flex;
+}
+
+.navbar-end {
+    display: flex;
+}

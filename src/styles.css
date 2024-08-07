@@ -1,7 +1,7 @@
 .tareas-lista {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Espacio entre las tarjetas */
+    gap: 3rem; /* Espacio entre las tarjetas */
 }
 
 .tarea-item {

@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 
 
-function TarjetasTareas({ tarea, proyectoNombre }) {
+function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
   const { user__id }  = useAuth("state")
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,15 +25,16 @@ function TarjetasTareas({ tarea, proyectoNombre }) {
         throw new Error("No se pudo eliminar la tarea");
       }
 
-      onDelete(tarea.id); // Actualiza la lista de tareas en el componente padre
+      onDelete(tarea.id); // la prop onDelete es una funcion y por eso puede devolver un id unico cuando se renderizo con map
     } catch (error) {
       console.error("Error al eliminar la tarea", error);
     } finally {
-      setIsModalOpen(false); // Cierra el modal
+      setIsModalOpen(false); 
     }
   };
   return (
     <>
+    
     <div className="tarea box">
       <div className="tarea-content">
         <div className="media">
@@ -65,7 +66,7 @@ function TarjetasTareas({ tarea, proyectoNombre }) {
                   className="button is-danger"
                   onClick={handleDelete}
                 >
-                  Sí, eliminar
+                  Eliminar
                 </button>
                 <button
                   className="button"
@@ -83,8 +84,6 @@ function TarjetasTareas({ tarea, proyectoNombre }) {
           ></button>
         </div>
       )}
-    
-
     </>
    );
 }

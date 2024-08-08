@@ -18,7 +18,7 @@ export default function FormularioProyecto() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (!proyecto.proyecto) {
+    if (!proyecto.name) {
         setModal({
           isVisible: true,
           content: "El nombre del proyecto es obligatorio.",

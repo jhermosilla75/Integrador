@@ -1,14 +1,11 @@
-import { useAuth } from "../contexts/AuthContext";
+import React from 'react';
+import imagen from '../imagenes/cuadernos.jpg'; // Asegúrate de ajustar la ruta según dónde guardaste la imagen
 
 export default function Home() {
-    const {token, user__id} = useAuth("state")
     return (
         <div>
             <h1>Pagina de inicio</h1>
-            <p>Token: {token}</p>
-            <p>Id: {user__id}</p>
-            
-            
+            <img src={imagen} alt="Descripción de la imagen" style={{ width: '100%', height: 'auto' }} />
         </div>
     );
 }

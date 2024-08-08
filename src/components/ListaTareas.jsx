@@ -76,7 +76,7 @@ export default function ListaTareas() {
     return (
         <div>
             <div className="my-5">
-                <h2 className="title">Lista de tareas</h2>
+                {/* <h2 className="title">Lista de tareas</h2> */}
                 <div className="tareas-lista">
                     {tareas.map((tarea) => (
                         tarea.owner === user__id ?( 

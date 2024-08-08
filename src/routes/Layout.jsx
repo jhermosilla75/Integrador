@@ -7,18 +7,10 @@ import cuadernos from "../imagenes/cuadernos.jpg"; // Ajusta la ruta según dond
 export default function Layout() {
     return (
         <AuthProvider>
-            <div 
-                c/* lassName={`hero is-fullheight is-flex is-flex-direction-column`} 
-                style={{
-                    backgroundImage: `url(${cuadernos})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                }} */
-            >
+            <div>
                  <Nav />
                  <Outlet />
-                 <FooterBar />
+                 {/* <FooterBar /> */}
             </div>
         </AuthProvider>
     );

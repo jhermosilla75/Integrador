@@ -8,7 +8,4 @@ import { Router } from './routes/Router.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
     
         <RouterProvider router={Router}/>
-    
-    
-    
 );

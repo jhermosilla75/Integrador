@@ -1,3 +1,4 @@
+
 .tareas-lista {
     display: flex;
     flex-direction: column;
@@ -5,7 +6,9 @@
 }
 
 .tarea-item {
+    
     width: 50%; /* Para que la tarjeta ocupe todo el ancho disponible */
+    /* background-position: center; */
     
 }
 
@@ -22,3 +25,26 @@
 .navbar-end {
     display: flex;
 }
+
+
+/* Asegurarse de que el fondo cubra toda la página */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* Sticky footer */
+footerBar {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto; /* Asegura que el footer se mantenga al final */
+}
+

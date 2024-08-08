@@ -52,6 +52,7 @@ function AuthProvider({ children }) {
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
             localStorage.removeItem("taskAuth");
+            localStorage.removeItem("user__id");
         },
     };
 

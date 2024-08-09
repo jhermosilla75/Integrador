@@ -12,21 +12,6 @@
     
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Esto alinea los elementos de manera que uno quede a la izquierda y otro a la derecha */
-    align-items: center;
-}
-
-.navbar-start {
-    display: flex;
-}
-
-.navbar-end {
-    display: flex;
-}
-
-
 /* Asegurarse de que el fondo cubra toda la página */
 html, body {
     height: 100%;
@@ -36,15 +21,4 @@ html, body {
 
 
 
-/* Sticky footer */
-footerBar {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    margin-top: auto; /* Asegura que el footer se mantenga al final */
-}
 

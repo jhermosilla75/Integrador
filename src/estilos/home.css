@@ -30,6 +30,8 @@
 }
 
 .home-content {
+    padding-top: 60px; /* Asegúrate de dejar espacio para el Nav fijo */
+
     flex: 1; /* Toma todo el espacio disponible antes del footer */
-    padding: 20px; /* Opcional: añade padding alrededor del contenido */
+    
 }

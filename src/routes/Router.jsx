@@ -1,12 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../components/Auth/Login";
-import FormularioTarea from "../components/FormularioTarea";
-import FormularioProyecto from "../components/FormularioProyecto";
+import FormularioTarea from "../components/tareas/FormularioTarea";
+import FormularioProyecto from "../components/proyectos/FormularioProyecto";
+import ListaTareas from "../components/tareas/ListaTareas";
 import Home from "../components/Home";
 import Profile from "../components/Profile";
 import Layout from "./Layout";
-import ListaTareas from "../components/ListaTareas";
+
+
 import ProtectedRoute from "./ProtectedRoute";
+import ListaProyectos from "../components/proyectos/ListaProyectos";
 
 
 
@@ -58,6 +61,17 @@ const Router = createBrowserRouter(
                         </ProtectedRoute>
                     ),
                 },
+                {
+                    path: "proyectos",
+                    element: (
+                        <ProtectedRoute>
+                            <ListaProyectos/>
+                        </ProtectedRoute>
+                    )
+                     
+                    
+                },
+               
                 {
                     path: "*",
                     element: <h1>Not Found</h1>

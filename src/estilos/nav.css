@@ -1,0 +1,22 @@
+/* nav.css */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Asegura que el Nav esté por encima de otros elementos */
+    background-color: #2c2b2b; /* Cambia este color según tus necesidades */
+    box-shadow: 0 2px 4px rgba(5, 5, 5, 0.1); /* Opcional: añade una sombra para dar un efecto de elevación */
+}
+
+/* Sticky footer */
+.footerBar {
+    background-color: #df2a2a;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto; /* Asegura que el footer se mantenga al final */
+}
+

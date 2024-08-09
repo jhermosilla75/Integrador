@@ -1,8 +1,8 @@
 import React from 'react';
 import imagen from '../imagenes/cuadernos.jpg'; 
 import { useAuth } from '../contexts/AuthContext';  
-import ListaTareas from './ListaTareas';
-import FooterBar from './FooterBar';
+import ListaTareas from './tareas/ListaTareas';
+import ListaProyectos from './proyectos/ListaProyectos';
 import '../estilos/home.css';
 
 export default function Home() {
@@ -10,11 +10,13 @@ export default function Home() {
     const { login } = useAuth("actions");
 
     return (
-        
+          
         <div className="home-container" style={{ backgroundImage: `url(${imagen})` }}>
             <div className="home-content">
                 {login && user__id ? (
-                    <ListaTareas />
+                    <ListaProyectos />
+                    //
+                    
                     ) 
                     :(
                         <h1 className="home-title">
@@ -24,7 +26,6 @@ export default function Home() {
                         </h1>
                     )}
             </div>
-            <FooterBar />
         </div>
-    );
+       );
 }

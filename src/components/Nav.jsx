@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
+import "../estilos/nav.css"
 
-export default function Navbar() {
+export default function Nav() {
     return (
         <header>
             <nav
@@ -21,6 +22,20 @@ export default function Navbar() {
                     >
                         Home
                     </NavLink>
+
+                    <NavLink
+                        to="/lproyecto"
+                        className={({ isActive, isPending, isTransitioning }) =>
+                            [
+                                isPending ? "pending" : "",
+                                isActive ? "has-text-primary" : "",
+                                isTransitioning ? "transitioning" : "",
+                            ].join(" navbar-item")
+                        }
+                    >
+                        Lista Proyectos
+                    </NavLink>
+
                     <NavLink
                         to="/proyecto"
                         className={({ isActive, isPending, isTransitioning }) =>

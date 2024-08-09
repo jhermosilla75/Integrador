@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function FormularioTarea() {
   const [tarea, setTarea] = useState({ title: "", description: "", project: 0 });
@@ -7,7 +7,7 @@ export default function FormularioTarea() {
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
-  const { token } = useAuth("state");
+  const { token, user__id } = useAuth("state");
   
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
@@ -24,10 +24,11 @@ export default function FormularioTarea() {
         return response.json();
       })
       .then((data) => {
-        const proyectos = data.results.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        setProyectos(proyectos);
+        const proyectos = data.results
+        .filter(proyecto => proyecto.owner === user__id)
+        .sort((a, b) => a.name.localeCompare(b.name));
+    
+      setProyectos(proyectos);
         // Seleccionar el primer proyecto por defecto
         if (proyectos.length > 0) {
           setTarea((prevTarea) => ({

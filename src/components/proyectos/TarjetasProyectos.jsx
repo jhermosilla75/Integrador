@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 
-function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
-  const { user__id }  = useAuth("state")
-  const { token } = useAuth("state");
+function TarjetasProyectos({ proyecto, onDelete  }) {
+  const { user__id, token }  = useAuth("state")
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/${tarea.id}/`,
+        `${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/${proyecto.id}/`,
         {
           method: "DELETE",
           headers: {
@@ -22,12 +21,12 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
       );
 
       if (!response.ok) {
-        throw new Error("No se pudo eliminar la tarea");
+        throw new Error("No se pudo eliminar el proyecto");
       }
 
-      onDelete(tarea.id); // la prop onDelete es una funcion y por eso puede devolver un id unico cuando se renderizo con map
+      onDelete(proyecto.id); // la prop onDelete es una funcion y por eso puede devolver un id unico cuando se renderizo con map
     } catch (error) {
-      console.error("Error al eliminar la tarea", error);
+      console.error("Error al eliminar el proyecto", error);
     } finally {
       setIsModalOpen(false); 
     }
@@ -35,20 +34,20 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
   return (
     <>
     
-    <div className="tarea box">
-      <div className="tarea-content">
+    <div className="proyecto box">
+      <div className="proyecto-content">
         <div className="media">
           <div className="media-content">
-            <p className="title is-5 has-text-link">{tarea.title}</p> 
+            <p className="title is-5 has-text-link">Nombre del proyecto</p> 
             <p className="subtitle is-6 has-text-grey-light">
-              Proyecto: {proyectoNombre} </p>
+              Proyecto: {proyecto.name} </p>
           </div>
         </div>
         <div className="content">
-          <p>{tarea.description ? tarea.description : "Sin descripción"}</p>
+          <p>{proyecto.description ? proyecto.description : "Sin descripción"}</p>
         </div>
       </div>
-      {tarea.owner === user__id ? ( 
+      {proyecto.owner === user__id ? ( 
       <div className="column" onClick={() => setIsModalOpen(true)}>
           <button className="button is-danger">Eliminar</button>
       </div>
@@ -88,5 +87,5 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
    );
 }
 
-export default TarjetasTareas;
+export default TarjetasProyectos;
   

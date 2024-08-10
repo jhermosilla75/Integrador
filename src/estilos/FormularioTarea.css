@@ -1,0 +1,25 @@
+.form-tarea {
+        background-color: rgb(104, 101, 101); /* Fondo color aquamarina */
+        padding: 20px; /* Espaciado interno */
+        border-radius: 8px; /* Bordes redondeados */
+        box-shadow: 0px 4px 8px rgba(112, 110, 110, 0.1); /* Sombra sutil */
+        width: 80%; /* Reduce el ancho del formulario */
+        max-width: 800px; /* Máximo ancho permitido */
+        margin-top: 5em; /* Mueve el formulario hacia abajo dos renglones (equivalente a la altura del texto en 2 líneas) */
+        margin-left: auto;
+        margin-right: auto; /* Centra el formulario horizontalmente */
+}
+
+.modal-content .box {
+    background-color: rgb(104, 101, 101); /* Fondo gris similar al formulario */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(112, 110, 110, 0.1); /* Sombra sutil */
+    max-width: 500px; /* Ancho máximo */
+    margin: auto; /* Centra el contenido */
+    color: rgb(0, 0, 0); /* Color del texto */
+}
+
+.modal .buttons .button {
+    margin-top: 10px; /* Espaciado entre botones y contenido */
+}

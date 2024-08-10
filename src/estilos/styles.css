@@ -1,0 +1,19 @@
+:root {
+    background-image: url('src/imagenes/cuaderno.png');
+    background-size: cover;
+    background-position: center; /* Centra la imagen en el viewport */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh; /* Altura igual a la del viewport */
+    width: 100%; /* Ancho igual al 100% del viewport */
+
+    /* Define la fuente globalmente */
+    font-family: 'Permanent Marker', cursive;
+}
+
+body {
+    font-family: 'Permanent Marker', cursive;
+}
+
+
+

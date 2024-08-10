@@ -11,6 +11,7 @@ export default function ListaTareas() {
     const { user__id }  = useAuth("state")
     const { token } = useAuth("state");
     
+    
     const fetchProyectos = async () => {
         try {
             const response = await 
@@ -76,10 +77,10 @@ export default function ListaTareas() {
     return (
         <div>
             <div className="my-5">
-                {/* <h2 className="title">Lista de tareas</h2> */}
+                <h2 className="title">Lista de tareas</h2>
                 <div className="tareas-lista">
                     {tareas.map((tarea) => (
-                        tarea.owner === user__id ?( 
+                        tarea.owner == user__id ?( 
                         <div key={tarea.id} className="tarea-item">
                             <TarjetasTareas
                             tarea={tarea}

@@ -1,7 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import "../../estilos/FormularioTarea.css"
 
 export default function FormularioTarea() {
+  const navigate = useNavigate();
+
   const [tarea, setTarea] = useState({ title: "", description: "", project: 0 });
   const [proyectos, setProyectos] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -25,7 +29,7 @@ export default function FormularioTarea() {
       })
       .then((data) => {
         const proyectos = data.results
-        .filter(proyecto => proyecto.owner === user__id)
+        .filter(proyecto => proyecto.owner == user__id)
         .sort((a, b) => a.name.localeCompare(b.name));
     
       setProyectos(proyectos);
@@ -84,13 +88,16 @@ export default function FormularioTarea() {
         return response.json();
       })
       .then((data) => {
-        console.log("Tarea creada:", data);
         setModal({
           isVisible: true,
           content: "Tarea creada con éxito",
         });
         // Limpiar el formulario
         setTarea({ title: "", description: "", project: proyectos[0].id });
+        setTimeout(() => {
+          setModal({ isVisible: false, content: "" });
+          navigate("/"); // Redirigir a Home
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error al crear la tarea", error);
@@ -110,13 +117,15 @@ export default function FormularioTarea() {
   function handleModalClose(confirm) {
     if (confirm && modal.content === "¿Estás seguro de que deseas cancelar?") {
       setTarea({ title: "", description: "", project: proyectos[0]?.id || 0 });
+      navigate("/");
+    } else {
+      setModal({ isVisible: false, content: "" });
     }
-    setModal({ isVisible: false, content: "" });
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="form-tarea"onSubmit={handleSubmit}>
         <div className="field">
           <label className="label has-text-left">Ingrese Nombre la tarea</label>
           <div className="control">
@@ -211,7 +220,7 @@ export default function FormularioTarea() {
                   </button>
                 </div>
               )}
-              {modal.content !== "¿Estás seguro de que deseas cancelar?" && (
+              {modal.content !== "Tarea creada con éxito"  && (
                 <button
                   className="button is-primary"
                   onClick={() => handleModalClose(false)}

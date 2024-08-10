@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import "../../estilos/TarjetasTareas.css";
 
 
 
@@ -7,6 +8,8 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
   const { user__id }  = useAuth("state")
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false); // Nuevo estado para controlar el mensaje de éxito
+  
 
   const handleDelete = async () => {
     try {
@@ -29,6 +32,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
     } catch (error) {
       console.error("Error al eliminar la tarea", error);
     } finally {
+
       setIsModalOpen(false); 
     }
   };
@@ -39,8 +43,8 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
       <div className="tarea-content">
         <div className="media">
           <div className="media-content">
-            <p className="title is-5 has-text-link">{tarea.title}</p> 
-            <p className="subtitle is-6 has-text-grey-light">
+            <p className="titulo-tarea">TAREA: {tarea.title}</p> 
+            <p className="subtitulo-proyecto">
               Proyecto: {proyectoNombre} </p>
           </div>
         </div>
@@ -48,7 +52,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
           <p>{tarea.description ? tarea.description : "Sin descripción"}</p>
         </div>
       </div>
-      {tarea.owner === user__id ? ( 
+      {tarea.owner == user__id ? ( 
       <div className="column" onClick={() => setIsModalOpen(true)}>
           <button className="button is-danger">Eliminar</button>
       </div>
@@ -60,7 +64,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
           <div className="modal-background"></div>
           <div className="modal-content">
             <div className="box">
-              <p>¿Estás seguro de que deseas eliminar esta tarea?</p>
+              <p>Se va a eliminar la tarea: {tarea.title}</p>
               <div className="buttons">
                 <button
                   className="button is-danger"

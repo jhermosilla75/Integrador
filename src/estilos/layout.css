@@ -1,0 +1,4 @@
+.form-lay{
+    display: flex;
+    flex-direction: column;
+}

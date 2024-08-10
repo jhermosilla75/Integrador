@@ -1,37 +1,30 @@
-﻿.home-container1 {
+﻿.home-container {
+    min-height: 100vh;
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    background-attachment: fixed;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    text-align: center; /* Centra el texto */
+    justify-content: center; /* Centra el contenido verticalmente */
+    align-items: center; /* Centra el contenido horizontalmente */
+    flex-direction: column;
+    text-align: center; /* Centra el texto horizontalmente */
 }
 
 .home-title {
-    color: #5e2727; /* Color oscuro para el texto */
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7); /* Sombra clara para resaltar el texto */
-    font-family: 'Arial', sans-serif; /* Cambia el tipo de tipografía */
-    font-size: 2.5rem; /* Tamaño de fuente */
-    line-height: 1.4; /* Altura de línea */
-}
-
-
-
-.home-container {
-    min-height: 100vh; /* Asegura que el contenedor ocupe al menos toda la altura de la pantalla */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed; /* Hace que el fondo permanezca fijo */
-    display: flex;
-    flex-direction: column;
+    color: #5e2727;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para un efecto más marcado */
+    font-family: 'Permanent Marker', sans-serif; /* Cambia la fuente a grafiti */
+    font-size: 3rem; /* Tamaño de fuente más grande */
+    line-height: 1.4;
+    margin: 0;
+    padding: 20px;
+    background: transparent; /* Fondo blanco translúcido para mayor legibilidad */
+    border-radius: 10px; /* Bordes redondeados */
+    display: inline-block; /* Ajusta el tamaño del fondo al texto */
 }
 
 .home-content {
-    padding-top: 60px; /* Asegúrate de dejar espacio para el Nav fijo */
-
-    flex: 1; /* Toma todo el espacio disponible antes del footer */
-    
+    padding: 20px;
+    max-width: 80%; /* Limita el ancho del contenido para que no se extienda demasiado */
+    margin: 0 auto; /* Centra el contenido horizontalmente */
 }

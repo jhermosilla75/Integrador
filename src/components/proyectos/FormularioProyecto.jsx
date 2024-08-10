@@ -1,5 +1,6 @@
 import { useState  } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import "../../estilos/FormularioProyecto.css"
 
 export default function FormularioProyecto() {
   const [proyecto, setProyecto] = useState({ name: "", description: ""});
@@ -71,10 +72,12 @@ export default function FormularioProyecto() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <div className="main-container">
+      <form onSubmit={handleSubmit} className="formulario-proyecto">
         <div className="field">
-          <label className="label has-text-left" htmlFor="proyecto">Ingrese Nombre del Proyecto </label>
+          <label className="label has-text-left" htmlFor="proyecto">
+            Ingrese Nombre del Proyecto
+          </label>
           <div className="control">
             <input
               className="input"
@@ -87,22 +90,23 @@ export default function FormularioProyecto() {
             />
           </div>
         </div>
-
+  
         <div className="field">
-          <label className="label has-text-left" htmlFor="description">Descripción del proyecto</label>
+          <label className="label has-text-left" htmlFor="description">
+            Descripción del proyecto
+          </label>
           <div className="control">
             <textarea
               className="textarea"
               id="description"
               name="description"
-              type="text"
               value={proyecto.description}
               onChange={handleInputChange}
               placeholder="Escribe tu mensaje"
             ></textarea>
           </div>
         </div>
-
+  
         <div className="field is-grouped is-grouped-centered">
           <div className="control">
             <button
@@ -128,7 +132,7 @@ export default function FormularioProyecto() {
           </div>
         </div>
       </form>
-
+  
       {modal.isVisible && (
         <div className={`modal ${modal.isVisible ? "is-active" : ""}`}>
           <div className="modal-background"></div>
@@ -167,6 +171,7 @@ export default function FormularioProyecto() {
           ></button>
         </div>
       )}
-    </>
+    </div>
   );
+  
 }

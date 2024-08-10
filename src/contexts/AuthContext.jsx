@@ -31,8 +31,9 @@ function reducer(state, action) {
 
 function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, {
-        user__id: localStorage.getItem("user__id") || null,
-        token: localStorage.getItem("taskAuth") || null,
+        isAuthenticated: localStorage.getItem("taskAuth") ? true : false,
+        user__id: localStorage.getItem("user__id") ,
+        token: localStorage.getItem("taskAuth") ,
         
     });
     const navigate = useNavigate();

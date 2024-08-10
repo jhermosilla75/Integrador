@@ -49,8 +49,6 @@ const Router = createBrowserRouter(
                             <ListaTareas/>
                         </ProtectedRoute>
                     )
-                     
-                    
                 },
                 
                 {

@@ -96,7 +96,7 @@ export default function FormularioTarea() {
         setTarea({ title: "", description: "", project: proyectos[0].id });
         setTimeout(() => {
           setModal({ isVisible: false, content: "" });
-          navigate("/"); // Redirigir a Home
+          navigate("/"); 
         }, 2000);
       })
       .catch((error) => {

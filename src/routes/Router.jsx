@@ -60,7 +60,7 @@ const Router = createBrowserRouter(
                     ),
                 },
                 {
-                    path: "proyectos",
+                    path: "lproyecto",
                     element: (
                         <ProtectedRoute>
                             <ListaProyectos/>

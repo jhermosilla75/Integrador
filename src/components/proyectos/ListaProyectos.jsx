@@ -49,7 +49,7 @@ import { useAuth } from "../../contexts/AuthContext";
                 <h2 className="title">Lista de Proyectos</h2>
                 <div className="proyecto-lista">
                     {proyectos.map((proyecto) => (
-                        proyecto.owner === user__id ?( 
+                        proyecto.owner == user__id ?( 
                         <div key={proyecto.id} className="proyecto-item">
                             <TarjetasProyectos
                             proyecto={proyecto}

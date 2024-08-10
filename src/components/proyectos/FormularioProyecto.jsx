@@ -1,14 +1,15 @@
-import { useState  } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import "../../estilos/FormularioProyecto.css"
+import "../../estilos/FormularioProyecto.css";
 
 export default function FormularioProyecto() {
-  const [proyecto, setProyecto] = useState({ name: "", description: ""});
+  const navigate = useNavigate();
+  const [proyecto, setProyecto] = useState({ name: "", description: "" });
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
-  const  { token } = useAuth("state")
-  
+  const { token } = useAuth("state");
 
   function handleInputChange(event) {
     setProyecto({
@@ -20,18 +21,18 @@ export default function FormularioProyecto() {
   function handleSubmit(event) {
     event.preventDefault();
     if (!proyecto.name) {
-        setModal({
-          isVisible: true,
-          content: "El nombre del proyecto es obligatorio.",
-        });
-        return;
-      }
+      setModal({
+        isVisible: true,
+        content: "El nombre del proyecto es obligatorio.",
+      });
+      return;
+    }
     setSubmitting(true);
     fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${ token }`,
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify(proyecto),
     })
@@ -42,12 +43,15 @@ export default function FormularioProyecto() {
         return response.json();
       })
       .then((data) => {
-        console.log("Proyecto creado:", data);
         setModal({
           isVisible: true,
           content: "Proyecto creado con éxito",
         });
         setProyecto({ name: "", description: "" });
+        setTimeout(() => {
+          setModal({ isVisible: false, content: "" });
+          navigate("/lproyecto"); 
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error al crear el proyecto", error);
@@ -66,9 +70,11 @@ export default function FormularioProyecto() {
 
   function handleModalClose(confirm) {
     if (confirm && modal.content === "¿Estás seguro de que deseas cancelar?") {
-      setProyecto({ name: "", description: ""});
+      setProyecto({ name: "", description: "" });
+      navigate("/lproyecto"); 
+    } else {
+      setModal({ isVisible: false, content: "" });
     }
-    setModal({ isVisible: false, content: "" });
   }
 
   return (
@@ -90,7 +96,7 @@ export default function FormularioProyecto() {
             />
           </div>
         </div>
-  
+
         <div className="field">
           <label className="label has-text-left" htmlFor="description">
             Descripción del proyecto
@@ -106,7 +112,7 @@ export default function FormularioProyecto() {
             ></textarea>
           </div>
         </div>
-  
+
         <div className="field is-grouped is-grouped-centered">
           <div className="control">
             <button
@@ -116,7 +122,7 @@ export default function FormularioProyecto() {
               name="enviarBtn"
               id="enviarBtn"
             >
-              Enviar
+              Crear
             </button>
           </div>
           <div className="control">
@@ -132,7 +138,7 @@ export default function FormularioProyecto() {
           </div>
         </div>
       </form>
-  
+
       {modal.isVisible && (
         <div className={`modal ${modal.isVisible ? "is-active" : ""}`}>
           <div className="modal-background"></div>
@@ -154,24 +160,18 @@ export default function FormularioProyecto() {
                     No
                   </button>
                 </div>
-              ) : (
-                <button
-                  className="button is-primary"
-                  onClick={() => handleModalClose(false)}
-                >
-                  Cerrar
-                </button>
-              )}
+              ) : null}
             </div>
           </div>
-          <button
-            className="modal-close is-large"
-            aria-label="close"
-            onClick={() => handleModalClose(false)}
-          ></button>
+          {modal.content !== "Proyecto creado con éxito" && (
+            <button
+              className="modal-close is-large"
+              aria-label="close"
+              onClick={() => handleModalClose(false)}
+            ></button>
+          )}
         </div>
       )}
     </div>
   );
-  
 }

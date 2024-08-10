@@ -8,7 +8,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
   const { user__id }  = useAuth("state")
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false); // Nuevo estado para controlar el mensaje de éxito
+  //const [isDeleted, setIsDeleted] = useState(false); 
   
 
   const handleDelete = async () => {

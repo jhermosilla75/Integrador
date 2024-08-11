@@ -4,12 +4,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/TarjetasTareas.css";
 
 function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
-  const { user__id } = useAuth("state");
+  // const { user__id } = useAuth("state");
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
   const navigate = useNavigate();
-
 
   const handleDelete = async () => {
     try {
@@ -28,14 +27,16 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
       }
 
       onDelete(tarea.id);
+      console.log("Cartelito");
       setModal({
         isVisible: true,
-        content: "Tarea eliminada con éxito",
-      });
 
+        content: "Operación realizada con éxito",
+      });
+      console.log("Cartelito1");
       setTimeout(() => {
         setModal({ isVisible: false, content: "" });
-
+        console.log("Cartelito3");
         // navigate("/perfil");
       }, 2000);
     } catch (error) {
@@ -101,9 +102,16 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
       )}
 
       {modal.isVisible && (
-        <div className="success-modal">
-          <p>{modal.content}</p>
-        </div>
+       <div className="modal is-active">
+       <div className="modal-background"></div>
+       <div className="modal-content">
+         <div className="box">
+           <p>{modal.content}</p>
+           
+         </div>
+       </div>
+       
+     </div>
       )}
     </>
   );

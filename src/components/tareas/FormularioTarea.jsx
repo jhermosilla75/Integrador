@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/FormularioTarea.css";
 
 export default function FormularioTarea() {
+  const { token, user__id } = useAuth("state");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +17,7 @@ export default function FormularioTarea() {
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
-  const { token, user__id } = useAuth("state");
+  
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
@@ -61,11 +62,7 @@ export default function FormularioTarea() {
     }
   }, [location.state, user__id, token]);
 
-
-
-    
-  /* }, []); */
-
+  
   function handleInputChange(event) {
     setTarea({
       ...tarea,
@@ -91,16 +88,12 @@ export default function FormularioTarea() {
       return;
     }
     setSubmitting(true);
-    console.log("Este es el id", tarea.id);
+    
     const url = tarea.id 
     ? `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/${tarea.id}/`
     : `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`;
-
-  const operacion = tarea.id ? "PATCH" : "POST";
-  console.log("Este es el metodo", operacion);
-  console.log("Este es el id", tarea.id);
-
-
+    const operacion = tarea.id ? "PATCH" : "POST";
+ 
     fetch(url, {
       method: operacion,
       headers: {
@@ -118,7 +111,7 @@ export default function FormularioTarea() {
       .then((data) => {
         setModal({
           isVisible: true,
-          content: "Tarea creada con éxito",
+          content: "Operación creada con éxito",
         });
         // Limpiar el formulario
         setTarea({ title: "", description: "", project: proyectos[0].id });

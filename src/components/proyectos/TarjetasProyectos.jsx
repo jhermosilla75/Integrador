@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/TarjetasProyectos.css";
@@ -5,6 +7,8 @@ import "../../estilos/TarjetasProyectos.css";
 function TarjetasProyectos({ proyecto, onDelete }) {
   const { user__id, token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
@@ -30,6 +34,9 @@ function TarjetasProyectos({ proyecto, onDelete }) {
       setIsModalOpen(false); 
     }
   };
+  const handleEdit = () => {
+    navigate("/proyecto", { state: { proyecto } });
+  };
 
   return (
     <>
@@ -43,11 +50,14 @@ function TarjetasProyectos({ proyecto, onDelete }) {
             <p>Descripcion: {proyecto.description ? proyecto.description : "Sin descripción"}</p>
           </div>
         </div>
-        {proyecto.owner == user__id && (
-          <div className="column" onClick={() => setIsModalOpen(true)}>
-            <button className="button">Eliminar</button>
-          </div>
-        )}
+        <div className="c-botones">
+          <button className="b-eliminar" onClick={() => setIsModalOpen(true)}>
+            Eliminar
+          </button>
+          <button className="b-editar" onClick={handleEdit}>
+            Editar
+          </button>
+        </div>
       </div>
 
       {isModalOpen && (

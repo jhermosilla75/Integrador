@@ -1,60 +1,126 @@
+/* Contenedor de la tarea */
 .tarea {
-    background-color: #c7b1a5; /* Marrón clarito */
-    color: #333; /* Color de texto oscuro para contraste */
-    width: 90%; /* Aumenta el ancho para que ocupe casi todo el renglón */
-    max-width: 1200px; /* Máximo ancho para evitar que sea demasiado grande en pantallas anchas */
-    height: auto; /* Permite que la altura se ajuste automáticamente al contenido */
-    min-height: 200px; /* Aumenta la altura mínima para mostrar más contenido */
-    margin: 10px auto; /* Reduce la separación entre tarjetas */
-    margin-top: 2rem;
-    padding: 20px; /* Padding interno para dar espacio al contenido */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-    display: flex;
-    flex-direction: column; /* Alinea el contenido en columna */
-    justify-content: space-between; /* Distribuye el contenido de la tarjeta */
-    align-items: flex-start; /* Alinea el contenido al inicio */
-}
-
-.tarea-content {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    padding-right: 20px; /* Espacio entre el contenido y el botón de eliminar */
-    overflow: hidden; /* Esconde el contenido que se sale del área visible */
-    white-space: normal; /* Permite que el texto ocupe varias líneas */
-    text-overflow: clip; /* Muestra todo el texto sin agregar puntos suspensivos */
-}
-
-.title {
-    font-size: 2.5rem; /* Tamaño de la letra más grande */
-    text-align: center; /* Centra el texto horizontalmente */
-    margin-top: 3rem; /* Margen superior de 3rem */
-    color: #333; /* Color del texto (opcional) */
-}
-
-.tarea .button.is-danger {
-    padding: 10px 20px;
-    align-self: flex-end; /* Coloca el botón en la parte inferior derecha */
-    margin-top: 10px;
-}
-
-.tarea-content .titulo-tarea {
-    margin-bottom: 5px;
-    color: #5e2727; /* Un color marrón más oscuro */
-}
-
-.tarea-content .subtitulo-proyecto {
+    border: 1px solid #ddd;
+    padding: 15px;
     margin-bottom: 10px;
-    color: #8a1414; /* Un gris suave */
-}
-
-.modal-content .box {
-    background-color: #fefefe; /* Fondo blanco para el modal */
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.buttons {
+    border-radius: 8px;
+    background-color: #c0b5b5;
+    width: 40%; 
+    margin-left: 80px; 
+    margin-right: auto; 
+  }
+  
+  /* Contenido de la tarea */
+  .tarea-content {
+    color: #555;
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    flex-direction: column;
+  }
+  
+  /* Título de la tarea */
+  .titulo-tarea {
+    color: #8B4513; /* Marrón oscuro */
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center; 
+    margin-bottom: 5px; 
+  }
+  
+  /* Subtítulo del proyecto */
+  .subtitulo-proyecto {
+    color: #8B4513; /* Marrón oscuro */
+    margin-bottom: 10px;
+    text-align: center;
+  }
+/* Contenido de la tarea */
+.tarea-content {
+  color: #6e2525; /* Color actual */
+  display: flex;
+  flex-direction: column;
 }
+
+
+  .content {
+    align-self: flex-start; /* Alinea el contenido a la izquierda */
+    margin-top: -30px; /* Mueve el contenido más arriba */
+    
+  }
+  
+  /* Botón de eliminar */
+  .b-eliminar {
+    background-color: #662b2b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .b-editar {
+    background-color: #662b2b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  /* Contenedor de los botones */
+.c-botones {
+  display: flex;
+  justify-content: center; /* Centra los botones horizontalmente */
+  gap: 10px; /* Espacio entre los botones */
+  margin-top: 20px; /* Espacio arriba del contenedor */
+}
+  
+  .b-eliminar:hover {
+    background-color: #ff0000;
+  }
+  
+  /* Modal de eliminación */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .modal-box {
+    background-color: rgb(179, 156, 156);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-danger {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button-danger:hover {
+    background-color: #ff0000;
+  }
+  
+  .success-modal {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  

@@ -1,24 +1,29 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import "../../estilos/FormularioTarea.css"
+import "../../estilos/FormularioTarea.css";
 
 export default function FormularioTarea() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [tarea, setTarea] = useState({ title: "", description: "", project: 0 });
+  const [tarea, setTarea] = useState({
+    title: "",
+    description: "",
+    project: 0,
+  });
   const [proyectos, setProyectos] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
   const { token, user__id } = useAuth("state");
-  
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${ token }`,
+        Authorization: `Token ${token}`,
       },
     })
       .then((response) => {
@@ -29,10 +34,10 @@ export default function FormularioTarea() {
       })
       .then((data) => {
         const proyectos = data.results
-        .filter(proyecto => proyecto.owner == user__id)
-        .sort((a, b) => a.name.localeCompare(b.name));
-    
-      setProyectos(proyectos);
+          .filter((proyecto) => proyecto.owner == user__id)
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        setProyectos(proyectos);
         // Seleccionar el primer proyecto por defecto
         if (proyectos.length > 0) {
           setTarea((prevTarea) => ({
@@ -43,11 +48,23 @@ export default function FormularioTarea() {
       })
       .catch((error) => {
         console.error("Error al cargar los proyectos", error);
-      })
-      /* .finally(() => {
-        setCargandoProyectos(false);
-      }); */
-  }, []);
+      });
+
+      // Cargar datos de la tarea si existen
+    if (location.state && location.state.tarea) {
+      setTarea({
+        id: location.state.tarea.id,
+        title: location.state.tarea.title,
+        description: location.state.tarea.description,
+        project: location.state.tarea.project,
+      });
+    }
+  }, [location.state, user__id, token]);
+
+
+
+    
+  /* }, []); */
 
   function handleInputChange(event) {
     setTarea({
@@ -68,16 +85,27 @@ export default function FormularioTarea() {
     if (!tarea.title || tarea.project === 0) {
       setModal({
         isVisible: true,
-        content: "El nombre de la tarea y la selección de un proyecto son obligatorios.",
+        content:
+          "El nombre de la tarea y la selección de un proyecto son obligatorios.",
       });
       return;
     }
     setSubmitting(true);
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`, {
-      method: "POST",
+    console.log("Este es el id", tarea.id);
+    const url = tarea.id 
+    ? `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/${tarea.id}/`
+    : `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/`;
+
+  const operacion = tarea.id ? "PATCH" : "POST";
+  console.log("Este es el metodo", operacion);
+  console.log("Este es el id", tarea.id);
+
+
+    fetch(url, {
+      method: operacion,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${ token }`,
+        Authorization: `Token ${token}`,
       },
       body: JSON.stringify(tarea),
     })
@@ -96,7 +124,7 @@ export default function FormularioTarea() {
         setTarea({ title: "", description: "", project: proyectos[0].id });
         setTimeout(() => {
           setModal({ isVisible: false, content: "" });
-          navigate("/"); 
+          navigate("/");
         }, 2000);
       })
       .catch((error) => {
@@ -125,7 +153,7 @@ export default function FormularioTarea() {
 
   return (
     <>
-      <form className="form-tarea"onSubmit={handleSubmit}>
+      <form className="form-tarea" onSubmit={handleSubmit}>
         <div className="field">
           <label className="label has-text-left">Ingrese Nombre la tarea</label>
           <div className="control">
@@ -160,37 +188,33 @@ export default function FormularioTarea() {
         </div>
 
         <div className="field">
-          <label className="label has-text-left">Descripción de la tarea</label>
+          <label className="label has-text-left">Descripción</label>
           <div className="control">
             <textarea
               className="textarea"
               name="description"
               value={tarea.description}
               onChange={handleInputChange}
-              placeholder="Escribe tu mensaje"
+              placeholder="Descripción de la tarea"
             ></textarea>
           </div>
         </div>
 
-        <div className="field is-grouped is-grouped-centered">
+        <div className="field is-grouped">
           <div className="control">
             <button
-              className="button is-primary mr-2"
+              className="button is-primary"
               type="submit"
               disabled={submitting}
-              name="enviarBtn"
-              id="enviarBtn"
             >
-              Crear Tarea
+              {submitting ? "Guardando..." : "Guardar Tarea"}
             </button>
           </div>
           <div className="control">
             <button
-              className="button is-primary"
+              className="button is-light"
               type="button"
               onClick={handleCancel}
-              name="cancelarBtn"
-              id="cancelarBtn"
             >
               Cancelar
             </button>
@@ -199,7 +223,7 @@ export default function FormularioTarea() {
       </form>
 
       {modal.isVisible && (
-        <div className={`modal ${modal.isVisible ? "is-active" : ""}`}>
+        <div className="modal is-active">
           <div className="modal-background"></div>
           <div className="modal-content">
             <div className="box">
@@ -210,30 +234,22 @@ export default function FormularioTarea() {
                     className="button is-danger"
                     onClick={() => handleModalClose(true)}
                   >
-                    Sí
+                    Confirmar
                   </button>
                   <button
                     className="button"
                     onClick={() => handleModalClose(false)}
                   >
-                    No
+                    Cancelar
                   </button>
                 </div>
-              )}
-              {modal.content !== "Tarea creada con éxito"  && (
-                <button
-                  className="button is-primary"
-                  onClick={() => handleModalClose(false)}
-                >
-                  Cerrar
-                </button>
               )}
             </div>
           </div>
           <button
             className="modal-close is-large"
             aria-label="close"
-            onClick={() => handleModalClose(false)}
+            onClick={() => setModal({ isVisible: false, content: "" })}
           ></button>
         </div>
       )}

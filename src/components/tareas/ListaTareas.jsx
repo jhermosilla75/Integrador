@@ -73,7 +73,6 @@ export default function ListaTareas() {
     const handleDelete = (idTarea) => {
         setTareas((prevTareas) => prevTareas.filter((tarea) => tarea.id !== idTarea));
     };
-
     return (
         <div>
             <div className="my-5">

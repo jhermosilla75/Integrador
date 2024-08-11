@@ -1,15 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/TarjetasTareas.css";
 
-
-
-function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
-  const { user__id }  = useAuth("state")
+function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
+  const { user__id } = useAuth("state");
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //const [isDeleted, setIsDeleted] = useState(false); 
-  
+  const [modal, setModal] = useState({ isVisible: false, content: "" });
+  const navigate = useNavigate();
+
 
   const handleDelete = async () => {
     try {
@@ -23,53 +23,66 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("No se pudo eliminar la tarea");
       }
 
-      onDelete(tarea.id); // la prop onDelete es una funcion y por eso puede devolver un id unico cuando se renderizo con map
+      onDelete(tarea.id);
+      setModal({
+        isVisible: true,
+        content: "Tarea eliminada con éxito",
+      });
+
+      setTimeout(() => {
+        setModal({ isVisible: false, content: "" });
+
+        // navigate("/perfil");
+      }, 2000);
     } catch (error) {
       console.error("Error al eliminar la tarea", error);
     } finally {
-
-      setIsModalOpen(false); 
+      setIsModalOpen(false);
     }
   };
+  const handleEdit = () => {
+    navigate("/tarea", { state: { tarea } });
+  };
+
   return (
     <>
-    
-    <div className="tarea box">
-      <div className="tarea-content">
-        <div className="media">
-          <div className="media-content">
-            <p className="titulo-tarea">TAREA: {tarea.title}</p> 
-            <p className="subtitulo-proyecto">
-              Proyecto: {proyectoNombre} </p>
+      <div className="tarea">
+        <div className="tarea-content">
+          <div className="media">
+            <div className="media-content">
+              <p className="titulo-tarea">TAREA: {tarea.title}</p>
+              <p className="subtitulo-proyecto">Proyecto: {proyectoNombre}</p>
+            </div>
+          </div>
+          <div className="content">
+            <p>
+              Descripcion:{" "}
+              {tarea.description ? tarea.description : "Sin descripción"}
+            </p>
           </div>
         </div>
-        <div className="content">
-          <p>{tarea.description ? tarea.description : "Sin descripción"}</p>
+        <div className="c-botones">
+          <button className="b-eliminar" onClick={() => setIsModalOpen(true)}>
+            Eliminar
+          </button>
+          <button className="b-editar" onClick={handleEdit}>
+            Editar
+          </button>
         </div>
       </div>
-      {tarea.owner == user__id ? ( 
-      <div className="column" onClick={() => setIsModalOpen(true)}>
-          <button className="button is-danger">Eliminar</button>
-      </div>
-      ): null}
-    </div>
 
-    {isModalOpen && (
-        <div className={`modal ${isModalOpen ? "is-active" : ""}`}>
+      {isModalOpen && (
+        <div className={`modal ${modal.isVisible ? "is-active" : ""}`}>
           <div className="modal-background"></div>
           <div className="modal-content">
-            <div className="box">
+            <div className="modal-box">
               <p>Se va a eliminar la tarea: {tarea.title}</p>
               <div className="buttons">
-                <button
-                  className="button is-danger"
-                  onClick={handleDelete}
-                >
+                <button className="button-danger" onClick={handleDelete}>
                   Eliminar
                 </button>
                 <button
@@ -81,16 +94,19 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete  }) {
               </div>
             </div>
           </div>
-          <button
-            className="modal-close is-large"
-            aria-label="close"
-            onClick={() => setIsModalOpen(false)}
-          ></button>
+          <button className="modal-close" onClick={() => setIsModalOpen(false)}>
+            ×
+          </button>
+        </div>
+      )}
+
+      {modal.isVisible && (
+        <div className="success-modal">
+          <p>{modal.content}</p>
         </div>
       )}
     </>
-   );
+  );
 }
 
 export default TarjetasTareas;
-  

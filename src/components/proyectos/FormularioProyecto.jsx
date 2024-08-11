@@ -1,16 +1,30 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/FormularioProyecto.css";
 
 export default function FormularioProyecto() {
+  const { token, user__id } = useAuth("state");
+  const location = useLocation();
   const navigate = useNavigate();
-  const [proyecto, setProyecto] = useState({ name: "", description: "" });
+
+  const proyectoExistente = location.state?.proyecto || null;
+  
+  const [proyecto, setProyecto] = useState(
+    { name: "",
+      description: ""
+    });
   const [submitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState({ isVisible: false, content: "" });
 
-  const { token } = useAuth("state");
-
+  useEffect(() => {
+    
+    if (proyectoExistente) {
+      setProyecto(proyectoExistente);
+    }
+  }, [proyectoExistente]);
+  
+  
   function handleInputChange(event) {
     setProyecto({
       ...proyecto,
@@ -28,8 +42,14 @@ export default function FormularioProyecto() {
       return;
     }
     setSubmitting(true);
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
-      method: "POST",
+
+    const operacion = proyectoExistente ? "PATCH" : "POST";
+    const url = proyectoExistente 
+      ? `${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/${proyectoExistente.id}/`
+      : `${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`;
+
+    fetch(url, {
+      method: operacion,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
@@ -45,7 +65,7 @@ export default function FormularioProyecto() {
       .then((data) => {
         setModal({
           isVisible: true,
-          content: "Proyecto creado con éxito",
+          content: "Operación realizada con éxito",
         });
         setProyecto({ name: "", description: "" });
         setTimeout(() => {
@@ -122,7 +142,7 @@ export default function FormularioProyecto() {
               name="enviarBtn"
               id="enviarBtn"
             >
-              Crear
+              Guardar
             </button>
           </div>
           <div className="control">
@@ -163,7 +183,7 @@ export default function FormularioProyecto() {
               ) : null}
             </div>
           </div>
-          {modal.content !== "Proyecto creado con éxito" && (
+          {modal.content !== "Operación realizada con éxito" && (
             <button
               className="modal-close is-large"
               aria-label="close"

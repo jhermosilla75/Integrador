@@ -27,7 +27,7 @@ function TarjetasProyectos({ proyecto, onDelete }) {
         throw new Error("No se pudo eliminar el proyecto");
       }
 
-      onDelete(proyecto.id); // la prop onDelete es una funcion y por eso puede devolver un id unico cuando se renderizo con map
+      onDelete(proyecto.id); 
     } catch (error) {
       console.error("Error al eliminar el proyecto", error);
     } finally {

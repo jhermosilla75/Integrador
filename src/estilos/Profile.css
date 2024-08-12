@@ -1,0 +1,46 @@
+.form-container {
+    background-color: #c7b1a5; 
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(112, 110, 110, 0.1); /* Sombra sutil */
+    width: 80%; /* Reduce el ancho del formulario */
+    max-width: 800px; /* Máximo ancho permitido */
+    margin-top: 5em; /* Mueve el formulario hacia abajo dos renglones (equivalente a la altura del texto en 2 líneas) */
+    margin-left: auto;
+    margin-right: auto; /* Centra el formulario horizontalmente */
+}
+
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #918686;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.form-textarea {
+    min-height: 100px;
+}
+
+.form-control {
+    display: flex;
+    justify-content: center;
+}
+
+.form-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #271e1e;
+    background-color: #836f6f;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #4e2424;
+}

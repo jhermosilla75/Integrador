@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TarjetasProyectos from "./TarjetasProyectos";
 import { useAuth } from "../../contexts/AuthContext";
+import "../../estilos/ListaProyectos.css";
 
  function ListaProyectos() {
     const [proyectos, setProyectos] = useState([]);

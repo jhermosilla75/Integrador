@@ -200,7 +200,7 @@ export default function FormularioTarea() {
               type="submit"
               disabled={submitting}
             >
-              {submitting ? "Guardando..." : "Guardar Tarea"}
+              {submitting ? "Guardando..." : "Guardar"}
             </button>
           </div>
           <div className="control">

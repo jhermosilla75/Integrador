@@ -1,5 +1,5 @@
 .formulario-proyecto {
-    background-color: rgb(104, 101, 101); /* Fondo color aquamarina */
+    background-color: #c7b1a5; 
     padding: 20px; /* Espaciado interno */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0px 4px 8px rgba(112, 110, 110, 0.1); /* Sombra sutil */
@@ -8,4 +8,7 @@
     margin-top: 5em; /* Mueve el formulario hacia abajo dos renglones (equivalente a la altura del texto en 2 líneas) */
     margin-left: auto;
     margin-right: auto; /* Centra el formulario horizontalmente */
+}
+.has-text-left{
+    color: #5e2727;
 }

@@ -1,27 +1,33 @@
+import { useNavigate } from "react-router-dom"; 
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import "../estilos/Profile.css"; 
 
 function Profile() {
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        dob: "",
+        bio: "",
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const  { token } = useAuth("state")
+    const { token, user__id } = useAuth("state");
+    const navigate = useNavigate();
 
     useEffect(() => {
-    
         fetch(
             `${import.meta.env.VITE_API_BASE_URL}users/profiles/profile_data/`,
             {
                 method: "GET",
                 headers: {
-                    Authorization: `Token ${ token }`,
+                    Authorization: `Token ${token}`,
                 },
             }
-            
         )
             .then((response) => {
-                console.log("devuelve algo:" ,response);
                 if (!response.ok) {
                     throw new Error("No se encontraror datos del usuario");
                 }
@@ -38,66 +44,105 @@ function Profile() {
             });
     }, []);
 
+    const handleChange = (e) => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(userData.first_name);
+        const updatedData = {
+            first_name: userData.first_name
+            
+        };
+        fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/users/profiles/${ user__id }/`,
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("No se encontraror datos del usuario");
+                }
+                return response.json(updatedData);
+            })
+            .then((data) => {
+                setUserData(data);
+                console.log("Perfil actualizado con exito");
+                navigate("/")
+            });
+        
+        // Aquí iría la lógica para enviar el formulario al backend.
+    };
+
     if (loading) return <p>Cargando perfil...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="card">
-            {userData ? (
-                <>
-                    <div className="card-content">
-                        <div className="media">
-                            <div className="media-left">
-                                <figure className="image is-48x48">
-                                    <img
-                                        src={
-                                            userData.image ||
-                                            "https://bulma.io/assets/images/placeholders/96x96.png"
-                                        }
-                                        alt="Profile image"
-                                        style={{ borderRadius: "50%" }}
-                                    />
-                                </figure>
-                            </div>
-                            <div className="media-content">
-                                <p className="title is-4 pb-2">
-                                    {userData.first_name} {userData.last_name}
-                                </p>
-                                <div
-                                    className="subtitle is-6"
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <img
-                                        src={`${
-                                            import.meta.env.VITE_API_BASE_URL
-                                        }${userData.state.icon}`}
-                                        alt="State icon"
-                                        style={{
-                                            height: "20px",
-                                            marginRight: "5px",
-                                            borderRadius: "50%",
-                                        }}
-                                    />
-                                    {userData.state.name}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="content">
-                            Email: {userData.email}
-                            <br />
-                            Fecha de Nacimiento: {userData.dob}
-                            <br />
-                            Biografía: {userData.bio || "No disponible"}
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <p className="subtitle">No se encontraron datos del usuario.</p>
-            )}
+        <div className="form-container">
+            <form className="form-profile" onSubmit={handleSubmit}>
+                <div className="form-field">
+                    <label className="form-label">Nombre</label>
+                    <input
+                        className="form-input"
+                        type="text"
+                        name="first_name"
+                        value={userData.first_name}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-field">
+                    <label className="form-label">Apellido</label>
+                    <input
+                        className="form-input"
+                        type="text"
+                        name="last_name"
+                        value={userData.last_name}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-field">
+                    <label className="form-label">Email</label>
+                    <input
+                        className="form-input"
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-field">
+                    <label className="form-label">Fecha de Nacimiento</label>
+                    <input
+                        className="form-input"
+                        type="date"
+                        name="dob"
+                        value={userData.dob}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-field">
+                    <label className="form-label">Biografía</label>
+                    <textarea
+                        className="form-textarea"
+                        name="bio"
+                        value={userData.bio}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="form-control">
+                    <button className="form-button" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

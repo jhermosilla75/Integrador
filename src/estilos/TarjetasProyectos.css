@@ -1,13 +1,14 @@
 /* Estilo general */
 .proyecto {
-    background-color: #c7b1a5; /* Marrón clarito */
+    background-color: #c7b1a5; 
     color: #333; /* Color de texto oscuro para contraste */
-    width: 90%; /* Aumenta el ancho para que ocupe casi todo el renglón */
+    width: 40%; /* Aumenta el ancho para que ocupe casi todo el renglón */
     max-width: 1200px; /* Máximo ancho para evitar que sea demasiado grande en pantallas anchas */
     height: auto; /* Permite que la altura se ajuste automáticamente al contenido */
     min-height: 150px; /* Altura mínima ajustada para que sea menos alta */
     margin: 10px auto; /* Reduce la separación entre tarjetas */
     margin-top: 2rem;
+    margin-left: 3cm;
     padding: 20px; /* Padding interno para dar espacio al contenido */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */

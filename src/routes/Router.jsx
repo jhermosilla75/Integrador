@@ -5,6 +5,7 @@ import FormularioProyecto from "../components/proyectos/FormularioProyecto";
 import ListaTareas from "../components/tareas/ListaTareas";
 import Home from "../components/Home";
 import Profile from "../components/Profile";
+import NoExiste from "../components/NoExiste";
 import Layout from "./Layout";
 
 
@@ -50,7 +51,6 @@ const Router = createBrowserRouter(
                         </ProtectedRoute>
                     )
                 },
-                
                 {
                     path: "proyecto",
                     element:(
@@ -66,23 +66,20 @@ const Router = createBrowserRouter(
                             <ListaProyectos/>
                         </ProtectedRoute>
                     )
-                     
-                    
                 },
-               
-                {
-                    path: "*",
-                    element: <h1>Not Found</h1>
-                },
-
-                
-               
-        ],
-    },
+            ],
+        },
+        {
+            path: "*",
+            element: <NoExiste/>
+        },
+    
 ],
-/* {
-    basename: "/react_context",
-} */
+
 );
 
 export {Router};
+
+/* {
+    basename: "/react_context",
+} */

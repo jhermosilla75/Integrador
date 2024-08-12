@@ -1,0 +1,8 @@
+.title {
+    font-size: 3rem; /* Tamaño de fuente más grande */
+    color: #5e2727; /* Cambia el color de la letra */
+    font-weight: bold; /* Opcional: Hace que el texto sea más grueso */
+    text-align: center; /* Opcional: Centra el texto horizontalmente */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Opcional: Añade una ligera sombra al texto */
+    margin-top: 2cm;
+}

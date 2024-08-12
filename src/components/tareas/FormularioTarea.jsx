@@ -20,7 +20,7 @@ export default function FormularioTarea() {
   
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/?page_size=100`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

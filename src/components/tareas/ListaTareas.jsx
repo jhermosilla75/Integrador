@@ -19,7 +19,7 @@ export default function ListaTareas() {
             const response = await 
             //fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`);   ESTO ERA PARA USARLO CON VARIABLE DE ENTORNO
             
-            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/`, {
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/projects/?page_size=100`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

@@ -63,12 +63,12 @@ function TarjetasProyectos({ proyecto, onDelete }) {
         </div>
       </div>
 
-      {<div id="miModal" classname="modalTemporal">
+      {/* {<div id="miModal" classname="modalTemporal">
         <div className="modal-content">
           <span className="close">&times;</span>
           <p>Este es un modal clásico sin Bulma</p>
         </div>
-      </div>}
+      </div>} */}
 
       {isModalOpen && (
         <div className={`modal ${isModalOpen ? "is-active" : ""}`}>

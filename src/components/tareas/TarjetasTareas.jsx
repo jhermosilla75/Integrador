@@ -72,7 +72,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
       </div>
 
       {isModalOpen && (
-        <div className={`modal ${modal.isVisible ? "is-active" : ""}`}>
+        <div className={`modal ${isModalOpen ? "is-active" : ""}`}>
           <div className="modal-background"></div>
           <div className="modal-content">
             <div className="modal-box">

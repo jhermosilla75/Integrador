@@ -7,6 +7,8 @@ function TarjetasProyectos({ proyecto, onDelete }) {
   const {  token, user__id } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const navigate = useNavigate();
+
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
@@ -32,9 +34,7 @@ function TarjetasProyectos({ proyecto, onDelete }) {
   };
 
 
-
-
-  const navigate = useNavigate();
+  
 
   const handleDelete = async () => {
     try {
@@ -65,12 +65,15 @@ function TarjetasProyectos({ proyecto, onDelete }) {
   const handleEdit = () => {
     navigate("/proyecto", { state: { proyecto } });
   };
+  const handleProyectoTarea = () => {
+    navigate("/proyectotareas", { state: { id: proyecto.id, name: proyecto.name } });
+  };
 
   return (
     <>
       <div
         className="proyecto box"
-        onClick={fetchTasks}
+        onClick={ handleProyectoTarea}
         style={{ cursor: "pointer" }} // Cambia el cursor al pasar por encima
       >
         <div className="proyecto-content">
@@ -86,7 +89,7 @@ function TarjetasProyectos({ proyecto, onDelete }) {
           <button
             className="b-eliminar"
             onClick={(e) => {
-              e.stopPropagation(); // Evita que el click en el botón se propague al div
+              e.stopPropagation(); 
               setIsModalOpen(true);
             }}
           >
@@ -95,7 +98,7 @@ function TarjetasProyectos({ proyecto, onDelete }) {
           <button
             className="b-editar"
             onClick={(e) => {
-              e.stopPropagation(); // Evita que el click en el botón se propague al div
+              e.stopPropagation(); 
               handleEdit();
             }}
           >

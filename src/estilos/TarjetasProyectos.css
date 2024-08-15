@@ -129,4 +129,25 @@
     cursor: pointer;
   }
 
-  
+
+  /* Estilo base para la tarjeta del proyecto */
+.proyecto {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+/* Estilo para cuando el ratón está sobre la tarjeta */
+.proyecto:hover {
+  transform: translateY(-10px); /* Eleva la tarjeta 10px */
+  background-color: #f0f0f0; /* Cambia el color de fondo, puedes ajustar el color a tu gusto */
+}
+
+/* Agrega un poco de sombreado para el efecto de elevación */
+.proyecto {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Aumenta el sombreado al pasar el ratón por encima */
+.proyecto:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}

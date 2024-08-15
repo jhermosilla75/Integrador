@@ -3,14 +3,17 @@ import Login from "../components/Auth/Login";
 import FormularioTarea from "../components/tareas/FormularioTarea";
 import FormularioProyecto from "../components/proyectos/FormularioProyecto";
 import ListaTareas from "../components/tareas/ListaTareas";
+import ListaProyectos from "../components/proyectos/ListaProyectos";
 import Home from "../components/Home";
 import Profile from "../components/Profile";
+import ListaProyectoTareas from "../components/proyectos/ListaProyectoTareas";
 import NoExiste from "../components/NoExiste";
 import Layout from "./Layout";
 
 
 import ProtectedRoute from "./ProtectedRoute";
-import ListaProyectos from "../components/proyectos/ListaProyectos";
+
+
 
 
 
@@ -64,6 +67,14 @@ const Router = createBrowserRouter(
                     element: (
                         <ProtectedRoute>
                             <ListaProyectos/>
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path: "proyectotareas",
+                    element: (
+                        <ProtectedRoute>
+                            <ListaProyectoTareas/>
                         </ProtectedRoute>
                     )
                 },

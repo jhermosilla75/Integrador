@@ -13,7 +13,7 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/${tarea.id}/`,
+        `${import.meta.env.VITE_API_BASE_URL}taskmanager/tasks/${tarea.id}/`,
         {
           method: "DELETE",
           headers: {
@@ -25,20 +25,15 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
       if (!response.ok) {
         throw new Error("No se pudo eliminar la tarea");
       }
-
+      
       onDelete(tarea.id);
-      console.log("Cartelito");
+      
       setModal({
         isVisible: true,
 
         content: "Operación realizada con éxito",
       });
-      console.log("Cartelito1");
-      setTimeout(() => {
-        setModal({ isVisible: false, content: "" });
-        console.log("Cartelito3");
-        // navigate("/perfil");
-      }, 2000);
+      
     } catch (error) {
       console.error("Error al eliminar la tarea", error);
     } finally {
@@ -83,7 +78,8 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
             <div className="modal-box">
               <p>Se va a eliminar la tarea: {tarea.title}</p>
               <div className="buttons">
-                <button className="button-danger" onClick={handleDelete}>
+                <button className="button-danger" onClick={handleDelete}
+                >
                   Eliminar
                 </button>
                 <button

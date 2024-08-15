@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/TarjetasTareas.css";
 //
-function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
+function TarjetasTareas({ tarea, proyectoNombre, onDelete, from }) {
   // const { user__id } = useAuth("state");
   const { token } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,7 +51,11 @@ function TarjetasTareas({ tarea, proyectoNombre, onDelete }) {
           <div className="media">
             <div className="media-content">
               <p className="titulo-tarea">TAREA: {tarea.title}</p>
-              <p className="subtitulo-proyecto">Proyecto: {proyectoNombre}</p>
+              {from !== "ListaProyectoTareas" && (
+                <p className="subtitulo-tarea">Proyecto: {proyectoNombre}</p>
+              )}
+              
+              
             </div>
           </div>
           <div className="content">

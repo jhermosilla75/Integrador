@@ -55,6 +55,7 @@ import "../../estilos/ListaProyectos.css";
                             <TarjetasProyectos
                             proyecto={proyecto}
                             onDelete={handleDelete}
+                            from= "ListaProyectos"
                             />
                         </div>
                         ):null

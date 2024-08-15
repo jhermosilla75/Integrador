@@ -2,9 +2,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";  
 import { useLocation } from 'react-router-dom';
-import '../../estilos/ListaProyectoTareas.css';
 import TarjetasTareas from '../tareas/TarjetasTareas';
-import ListaTareas from '../tareas/ListaTareas';
+import '../../estilos/ListaProyectoTareas.css';
 
 
 
@@ -20,15 +19,13 @@ export default function ListaProyectoTareas() {
     const { user__id }  = useAuth("state")
     const { token } = useAuth("state");
 
-    const projectId = Number(id); // Convertir el id a número
-    console.log(projectId);
-    
+        
     const fetchTareas = async () => {
         setIsLoading(true);
         try {
             const response = await 
                         
-            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/?project=123`, {
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/taskmanager/tasks/?project=${ id }`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -61,8 +58,7 @@ export default function ListaProyectoTareas() {
                         <div key={tarea.id} className="tarea-item">
                             <TarjetasTareas
                             tarea={tarea}
-                            //proyectoNombre={proyectos[tarea.project]}
-                            //onDelete={handleDelete}
+                            from= "ListaProyectoTareas"
                             />
                         </div>
                         ):null

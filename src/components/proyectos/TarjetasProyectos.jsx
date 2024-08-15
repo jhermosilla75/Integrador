@@ -1,12 +1,38 @@
 import { useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../estilos/TarjetasProyectos.css";
 
 function TarjetasProyectos({ proyecto, onDelete }) {
-  const { user__id, token } = useAuth("state");
+  const {  token, user__id } = useAuth("state");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [tasks, setTasks] = useState([]);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}taskmanager/tasks?project_id=${proyecto.id}?owner=user__id`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("No se pudieron obtener las tareas");
+      }
+
+      const data = await response.json();
+      setTasks(data); // Guardar las tareas en el estado
+    } catch (error) {
+      console.error("Error al obtener las tareas:", error);
+    }
+  };
+
+
+
 
   const navigate = useNavigate();
 
@@ -42,9 +68,12 @@ function TarjetasProyectos({ proyecto, onDelete }) {
 
   return (
     <>
-      <div className="proyecto box">
+      <div
+        className="proyecto box"
+        onClick={fetchTasks}
+        style={{ cursor: "pointer" }} // Cambia el cursor al pasar por encima
+      >
         <div className="proyecto-content">
-          {/* <p className="title">Nombre del proyecto</p> */}
           <p className="subtitle">Proyecto: {proyecto.name}</p>
           <div className="content">
             <p>
@@ -54,21 +83,26 @@ function TarjetasProyectos({ proyecto, onDelete }) {
           </div>
         </div>
         <div className="c-botones">
-          <button className="b-eliminar" onClick={() => setIsModalOpen(true)}>
+          <button
+            className="b-eliminar"
+            onClick={(e) => {
+              e.stopPropagation(); // Evita que el click en el botón se propague al div
+              setIsModalOpen(true);
+            }}
+          >
             Eliminar
           </button>
-          <button className="b-editar" onClick={handleEdit}>
+          <button
+            className="b-editar"
+            onClick={(e) => {
+              e.stopPropagation(); // Evita que el click en el botón se propague al div
+              handleEdit();
+            }}
+          >
             Editar
           </button>
         </div>
       </div>
-
-      {/* {<div id="miModal" classname="modalTemporal">
-        <div className="modal-content">
-          <span className="close">&times;</span>
-          <p>Este es un modal clásico sin Bulma</p>
-        </div>
-      </div>} */}
 
       {isModalOpen && (
         <div className={`modal ${isModalOpen ? "is-active" : ""}`}>

@@ -49,6 +49,10 @@ export default function ListaProyectoTareas() {
           fetchTareas();
     }, []);
 
+    const handleDelete = (idTarea) => {
+        setTareas((prevTareas) => prevTareas.filter((tarea) => tarea.id !== idTarea));
+    };
+
     return (
         <div>
         <h1 className="project-title">Proyecto: { name }</h1>
@@ -58,6 +62,7 @@ export default function ListaProyectoTareas() {
                         <div key={tarea.id} className="tarea-item">
                             <TarjetasTareas
                             tarea={tarea}
+                            onDelete={handleDelete}
                             from= "ListaProyectoTareas"
                             />
                         </div>

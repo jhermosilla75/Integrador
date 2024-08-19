@@ -139,7 +139,7 @@
 /* Estilo para cuando el ratón está sobre la tarjeta */
 .proyecto:hover {
   transform: translateY(-10px); /* Eleva la tarjeta 10px */
-  background-color: #f0f0f0; /* Cambia el color de fondo, puedes ajustar el color a tu gusto */
+  background-color: #976363; /* Cambia el color de fondo, puedes ajustar el color a tu gusto */
 }
 
 /* Agrega un poco de sombreado para el efecto de elevación */

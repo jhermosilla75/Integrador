@@ -55,23 +55,29 @@ function Profile() {
         e.preventDefault();
         console.log(userData.first_name);
         const updatedData = {
-            first_name: userData.first_name
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            email: userData.email,
+            dob: userData.dob,
+            bio: userData.bio,
             
         };
         fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/users/profiles/${ user__id }/`,
+            `${import.meta.env.VITE_API_BASE_URL}users/profiles/${ user__id }`,
             {
                 method: "PATCH",
                 headers: {
+                    "Content-Type": "application/json",
                     Authorization: `Token ${token}`,
                 },
+                body: JSON.stringify(updatedData),
             }
         )
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("No se encontraror datos del usuario");
                 }
-                return response.json(updatedData);
+                return response.json(userData);
             })
             .then((data) => {
                 setUserData(data);
